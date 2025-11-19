@@ -1,0 +1,13 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        script(src="/js/login.js" defer)
+    body
+h1 Velkommen til login siden
+h2 Indtast dit brugernavn og password, for at få adgang 
+input(type='text' name='brugernavn',, id='0' placeholder='brugernavn' required)
+input(type='password' name='password',, id='1' placeholder='password' required)
+input(type='submit', name='submit',id='2' value='Login')
+p(name='fejl', id='3')
