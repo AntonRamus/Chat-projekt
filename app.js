@@ -41,7 +41,8 @@ const users = await loadAllUsers()
 
 app.get('/', async (request, response) => {
     if (request.session.ok) {
-        response.render('frontpage', { title: 'Chatten' })
+        //console.log(JSON.stringify(request.session))
+        response.render('frontpage', { title: 'Chatten', bruger: request.session.username, userlevel: request.session.userlevel })
     } else {
         response.render('login')
     }
@@ -52,12 +53,24 @@ async function findBruger(brugernavn) {
         if (brugernavn === user.brugernavn)
             return user
     }
+    console.log(brugernavn + ' ikke fundet')
     return 'bruger ikke fundet'
 }
 
-app.get('/login', (request,response) => {
+app.get('/login', (request, response) => {
     response.render('login')
 })
+
+app.get('/logout', (request, response) => {
+    request.session.destroy((err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            response.redirect('/');
+        }
+    });
+}
+);
 
 app.post('/login', async (request, response) => {
     const brugernavn = request.body.username
@@ -71,7 +84,9 @@ app.post('/login', async (request, response) => {
             const password = request.body.password
             if (bruger.password === password) {
                 request.session.ok = true
-                response.status(201).send({ username: brugernavn, ok: true })
+                request.session.username = brugernavn
+                request.session.userlevel = bruger.brugerniveau
+                response.status(201).send({ ok: true })
             } else {
                 response.sendStatus(401)
             }

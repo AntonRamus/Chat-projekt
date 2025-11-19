@@ -6,7 +6,7 @@ const fejl = document.getElementById('3')
 login.onclick = async () => {
     console.log('clicked on login')
     try {
-        const data = await post("/login", { username: username.value, password: password.value });
+        const data = await post("/login", { username: username.value.trim(), password: password.value });
         if (data.ok == true) {
             window.location.href = "/"
         }
