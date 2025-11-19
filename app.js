@@ -39,10 +39,9 @@ async function loadAllUsers() {
 
 const users = await loadAllUsers()
 
-app.get('/', (request, response) => {
-    const user = request.session.user
-    if (user) {
-        console.log(request.session.ok)
+app.get('/', async (request, response) => {
+    if (request.session.ok) {
+        response.render('frontpage', { title: 'Chatten' })
     } else {
         response.render('login')
     }
@@ -56,28 +55,31 @@ async function findBruger(brugernavn) {
     return 'bruger ikke fundet'
 }
 
-app.post('/login', (request, response) => {
+app.get('/login', (request,response) => {
+    response.render('login')
+})
+
+app.post('/login', async (request, response) => {
     const brugernavn = request.body.username
 
     if (request.session.ok == 'undefined' || brugernavn == 'undefined') {
         response.render('login')
     }
     try {
-        const bruger = findBruger(brugernavn)
-        console.log(bruger)
+        const bruger = await findBruger(brugernavn)
         if (users.includes(bruger)) {
             const password = request.body.password
             if (bruger.password === password) {
-                request.session.isLoggedIn = true
-                response.status(201).send({ ok: true })
+                request.session.ok = true
+                response.status(201).send({ username: brugernavn, ok: true })
             } else {
                 response.sendStatus(401)
             }
         } else {
-            response.sendStatus(402)
+            response.sendStatus(401)
         }
     } catch (error) {
-        response.sendStatus(403) //Unauthorized
+        response.sendStatus(401) //Unauthorized
     }
 
 })
