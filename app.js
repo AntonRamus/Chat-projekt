@@ -61,16 +61,7 @@ app.get('/login', (request, response) => {
     response.render('login')
 })
 
-app.get('/logout', (request, response) => {
-    request.session.destroy((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            response.redirect('/');
-        }
-    });
-}
-);
+
 
 app.post('/login', async (request, response) => {
     const brugernavn = request.body.username
@@ -97,6 +88,31 @@ app.post('/login', async (request, response) => {
         response.sendStatus(401) //Unauthorized
     }
 
+})
+
+app.get('/logout', (request, response) => {
+    request.session.destroy((err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            response.redirect('/');
+        }
+    });
+}
+);
+
+app.get('/chats', async (request, response) => {
+    const userlevel = request.session.userlevel
+    if (userlevel === 3) {
+        const chatNames = await fs.readdir('./chats')
+        const chats = []
+        for (let chatName of chatNames) {
+            chats.push(JSON.parse(await fs.readFile('./chats/' + chatName)))
+        }
+        response.send(JSON.stringify(chats))
+    } else {
+        response.sendStatus(401)
+    }
 })
 
 app.listen(9090, () => {
