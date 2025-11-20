@@ -1,0 +1,29 @@
+#velkommen, #indtast {
+    font-family: comic sans ms, sans-serif;
+    color: #f0f8ff;
+    text-shadow: #000000 1px 1px 2px;
+}
+
+body {
+    background-color: #f0f8ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 50px;
+    border: 5px solid #000000;
+    border-radius: 15px;
+    background-image: url('/images/SuzukiTorben.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+input{
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+}

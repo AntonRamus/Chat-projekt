@@ -6,6 +6,8 @@ const app = express()
 app.set('view engine', 'pug')
 app.use(express.static('assets'))
 app.use(express.json())
+app.use('/css', express.static('css'))
+app.use('/images', express.static('images'))
 
 app.use(session({
     secret: '82CE19E6-1E02-450C-B71F-E29393A209BA',
