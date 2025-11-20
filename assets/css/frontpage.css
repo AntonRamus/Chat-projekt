@@ -1,0 +1,33 @@
+/* 
+Work in progress  
+*/
+h1 {
+    display: block;
+    font-family: comic sans ms, sans-serif;
+    color: #ffffff;
+    text-shadow: #000000 1px 1px 2px;
+}
+
+body {
+    display:grid;
+    justify-items: center;
+    grid-column: auto;
+    border: #000000 5px solid;
+    border-radius: 15px;
+}
+
+input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: comic sans ms, sans-serif;
+    
+}
+input:hover {
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
+}

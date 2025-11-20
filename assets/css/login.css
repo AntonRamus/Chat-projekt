@@ -1,6 +1,6 @@
-#velkommen, #indtast {
+#velkommen, #indtast, p {
     font-family: comic sans ms, sans-serif;
-    color: #f0f8ff;
+    color: #ffffff;
     text-shadow: #000000 1px 1px 2px;
 }
 
@@ -26,4 +26,10 @@ input{
     border: 2px solid #000000;
     border-radius: 5px;
     font-size: 16px;
+}
+
+input[id="2"]:hover {
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
 }

@@ -1,6 +1,13 @@
 include includes/header
 - var bruger= bruger
 - var userlevel = userlevel
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/frontpage.css")
+        script(src="/js/frontpage.js" defer)
+    body
 h1 Velkommen til siden #{bruger}
 if (userlevel == 3)
     input(type='button', class='button', value='Se brugere')
