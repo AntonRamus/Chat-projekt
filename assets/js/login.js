@@ -16,6 +16,12 @@ login.onclick = async () => {
     }
 }
 
+password.onkeydown = (event) => {
+    if (event.key === "Enter") {
+        login.click();
+    }
+}
+
 async function post(url, objekt) {
     const respons = await fetch(url, {
         method: "POST",
