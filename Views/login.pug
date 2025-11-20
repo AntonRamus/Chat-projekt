@@ -4,9 +4,10 @@ html(lang="en")
         meta(charset="UTF-8")
         title= title
         script(src="/js/login.js" defer)
+        link(rel="stylesheet", href="/css/login.css")
     body
-h1 Velkommen til login siden
-h2 Indtast dit brugernavn og password, for at få adgang 
+h1(id='velkommen') Velkommen til login siden
+h2(id='indtast') Indtast dit brugernavn og password, for at få adgang 
 input(type='text' name='brugernavn',, id='0' placeholder='brugernavn' required)
 input(type='password' name='password',, id='1' placeholder='password' required)
 input(type='submit', name='submit',id='2' value='Login')
