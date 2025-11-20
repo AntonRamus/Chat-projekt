@@ -5,3 +5,11 @@ logout.onclick = async () => {
     //dårlig langsom løsning. fix hvis tid hihi
     window.location.href = '/logout'
 }
+
+seChats.onclick = async () => {
+    let chats = await fetch('/chats', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    console.log(chats)
+}
