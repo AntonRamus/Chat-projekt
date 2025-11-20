@@ -5,10 +5,18 @@
     "ejer": "admin",
     "beskeder": [
         {
-        "id": 0,
-        "besked": "dette er en test",
-        "oprettelsesdato": "2025-11-19T12:38:00Z",
-        "chattilhørsforhold": "ejer"
+            "id": 0,
+            "besked": "dette er en test",
+            "oprettelsesdato": "2025-11-19T12:38:00Z",
+            "ejer": "admin",
+            "chattilhørsforhold": "ejer"
+        },
+        {
+            "id": 1,
+            "besked": "besked nr to",
+            "oprettelsesdato": "2025-11-20T08:29:00Z",
+            "ejer": "admin",
+            "chattilhørsforhold": "ejer"
         }
     ]
 }
