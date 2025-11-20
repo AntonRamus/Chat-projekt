@@ -10,6 +10,8 @@ seChats.onclick = async () => {
     let chats = await fetch('/chats', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
-    })
+    }).then(function (response) {
+        return response.json();
+    });
     console.log(chats)
 }
