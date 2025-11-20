@@ -12,12 +12,11 @@ class chat {
 }
 
 class message {
-    constructor(id, besked, ejer, chattilhørsforhold, chat) {
+    constructor(id, besked, ejer, chattilhørsforhold) {
         this.id = id
         this.besked = besked
         this.ejer = ejer
         this.oprettelsesdato = new Date().toLocaleDateString()
         this.chattilhørsforhold = chattilhørsforhold
-        chat.push(this)
     }
 }

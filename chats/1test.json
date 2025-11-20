@@ -1,0 +1,22 @@
+{
+    "id": 1,
+    "navn": "test",
+    "oprettelsesdato": "2025-11-20T09:51:00Z",
+    "ejer": "admin",
+    "beskeder": [
+        {
+            "id": 0,
+            "besked": "dette er en test",
+            "oprettelsesdato": "2025-11-20T09:51:00Z",
+            "ejer": "admin",
+            "chattilhørsforhold": "ejer"
+        },
+        {
+            "id": 1,
+            "besked": "besked nr to",
+            "oprettelsesdato": "2025-11-20T09:52:00Z",
+            "ejer": "admin",
+            "chattilhørsforhold": "ejer"
+        }
+    ]
+}

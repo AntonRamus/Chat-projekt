@@ -1,5 +1,6 @@
 const logout = document.getElementById('0')
 const seChats = document.getElementById('seChats')
+const chatList = document.getElementById('chatList')
 
 logout.onclick = async () => {
     //dårlig langsom løsning. fix hvis tid hihi
@@ -7,11 +8,32 @@ logout.onclick = async () => {
 }
 
 seChats.onclick = async () => {
-    let chats = await fetch('/chats', {
+    let chats = await getChats().then(chats => visChats(chats))
+}
+
+async function getChats() {
+    const chats = await fetch('/chats', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     }).then(function (response) {
         return response.json();
-    });
-    console.log(chats)
+    })
+    return chats
+}
+
+function visChats(chats) {
+    for (let chat of chats) {
+        const chatDOM = document.createElement("a")
+        const li = document.createElement("li")
+        li.appendChild(chatDOM)
+        chatList.appendChild(li)
+        const id = chat.id
+        const navn = chat.navn
+        const ejer = chat.ejer
+        const dato = chat.oprettelsesdato
+        const length = chat.beskeder.length
+
+        chatDOM.innerHTML = '(' + id + ')' + navn + ' (' + ejer + ', ' + dato + '(' + length + '))'
+        chatDOM.href = '/chats/' + id
+    }
 }
