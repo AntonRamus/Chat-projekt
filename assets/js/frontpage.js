@@ -15,7 +15,7 @@ async function getChats() {
     const chats = await fetch('/chats', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
-    }).then(function (response) {
+    }).then(response => {
         return response.json();
     })
     return chats

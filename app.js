@@ -125,6 +125,9 @@ app.get('/chats', async (request, response) => {
 app.get('/chats/:id', async (request, response) => {
     const idToGet = request.params.id
     const userlevel = request.session.userlevel
+    if (userlevel == 'undefined') {
+        response.redirect('/login')
+    }
     if (userlevel < 1 || userlevel > 3) {
         response.sendStatus(401) //Unauthorized
     } else {
@@ -166,6 +169,42 @@ app.get('/api/chats/:id', async (request, response) => {
             response.send(JSON.stringify(requestedChat))
         }
     }
+})
+
+app.delete('/api/chats/:chatId/:beskedId', async (request, response) => {
+    const chatID = request.params.chatId
+    const beskedID = request.params.beskedId
+
+    console.log('modtog delete request på chat: ' + chatID + ', besked: ' + beskedID)
+
+
+    const data = await fs.readFile('./chats/' + chatID + '.json')
+    let chat
+
+    if (data == 'undefined') {
+        console.log('chat ikke fundet')
+        response.sendStatus(404)
+    } else {
+        chat = JSON.parse(data)
+        let beskedToDelete = null
+        for (let besked of chat.beskeder) {
+            if (besked.id == beskedID) {
+                beskedToDelete = besked
+                break
+            }
+        }
+        if (beskedToDelete == null) {
+            console.log('besked ikke fundet')
+            response.sendStatus(404)
+        } else {
+            chat.beskeder = chat.beskeder.filter((besked => {
+                return besked.id != beskedID
+            }))
+        }
+    }
+
+
+
 })
 
 app.listen(9090, () => {

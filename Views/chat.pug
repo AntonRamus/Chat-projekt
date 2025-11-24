@@ -3,6 +3,7 @@ doctype html
 - var userlevel = userlevel
 - var chatnavn = chat.navn
 - var ejer = chat.ejer
+- var oprettelsesdato = chat.oprettelsesdato
 - var chatBeskeder = chat.beskeder
 html(lang="en")
     head
@@ -12,8 +13,11 @@ html(lang="en")
         script(src="/js/chat.js" defer)
     body
 h1 #{chatnavn}
-p #{ejer}
+p #{ejer} #{oprettelsesdato}
 div()
     ul(id='beskedList')
         each besked of chatBeskeder
             div(id=besked.id)
+                if (userlevel == 3 || besked.ejer == bruger)
+                    button(id='ret' + besked.id) Ret besked
+                    button(id='slet' + besked.id) Slet besked
