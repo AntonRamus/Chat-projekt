@@ -1,0 +1,19 @@
+doctype html
+- var bruger = bruger
+- var userlevel = userlevel
+- var chatnavn = chat.navn
+- var ejer = chat.ejer
+- var chatBeskeder = chat.beskeder
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/frontpage.css")
+        script(src="/js/chat.js" defer)
+    body
+h1 #{chatnavn}
+p #{ejer}
+div()
+    ul(id='beskedList')
+        each besked of chatBeskeder
+            div(id=besked.id)
