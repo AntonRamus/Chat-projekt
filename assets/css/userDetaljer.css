@@ -1,0 +1,30 @@
+body {
+  background-color: #f0f0f0;
+  font-family: comic sans ms, sans-serif;
+  margin: 0;
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.user {
+  border: solid 2px black;
+  padding: 10px;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: comic sans ms, sans-serif;
+}
+
+input:hover {
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}

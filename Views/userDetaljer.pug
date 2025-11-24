@@ -1,0 +1,20 @@
+include includes/header
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title User Detaljer
+        link(rel="stylesheet", href="/css/userDetaljer.css")
+    body
+div.user
+    h1 Bruger Detaljer
+    p Brugernavn: #{user.brugernavn}
+    p Brugerlevel: #{user.brugerniveau}
+    p ID: #{user.id}
+    p Oprettelsesdato: #{user.oprettelsesdato}
+    input(type="button", value="Tilbage", onclick="history.back()")
+    input(type="button", value="Se chats", id="seChatsBtn")
+    div#chatListContainer(style="margin-top: 20px;")
+        ul#chatList
+script(src="/js/chatDetaljer.js")
+script.
+    const brugernavn = '#{user.brugernavn}';
