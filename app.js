@@ -104,16 +104,13 @@ app.get('/logout', (request, response) => {
 
 app.get('/chats', async (request, response) => {
     const userlevel = request.session.userlevel
-    if (userlevel === 3) {
-        const chatNames = await fs.readdir('./chats')
-        const chats = []
-        for (let chatName of chatNames) {
-            chats.push(JSON.parse(await fs.readFile('./chats/' + chatName)))
-        }
-        response.send(JSON.stringify(chats))
-    } else {
-        response.sendStatus(401)
+
+    const chatNames = await fs.readdir('./chats')
+    const chats = []
+    for (let chatName of chatNames) {
+        chats.push(JSON.parse(await fs.readFile('./chats/' + chatName)))
     }
+    response.send(JSON.stringify(chats))
 })
 
 app.listen(9090, () => {
