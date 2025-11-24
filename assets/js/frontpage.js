@@ -1,4 +1,5 @@
 const logout = document.getElementById('0')
+const opretUser = document.getElementById('opretUser')
 const seChats = document.getElementById('seChats')
 const chatList = document.getElementById('chatList')
 
@@ -9,6 +10,10 @@ logout.onclick = async () => {
 
 seChats.onclick = async () => {
     let chats = await getChats().then(chats => visChats(chats))
+}
+
+opretUser.onclick = async () => {
+    window.location.href = '/opretUser'
 }
 
 async function getChats() {

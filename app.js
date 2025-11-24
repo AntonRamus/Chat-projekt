@@ -1,8 +1,10 @@
-import express from 'express'
+import express, { response } from 'express'
 import session from 'express-session'
 import fs from 'node:fs/promises'
+import { request } from 'node:http'
 
 const app = express()
+const userAmount = 3
 app.set('view engine', 'pug')
 app.use(express.static('assets'))
 app.use(express.json())
@@ -38,7 +40,7 @@ async function loadAllUsers() {
     }
 }
 
-const users = await loadAllUsers()
+let users = await loadAllUsers()
 
 app.get('/', async (request, response) => {
     if (request.session.ok) {
@@ -50,6 +52,7 @@ app.get('/', async (request, response) => {
 })
 
 async function findBruger(brugernavn) {
+    //console.log("findBruger: "+ users)
     for (let user of users) {
         if (brugernavn === user.brugernavn)
             return user
@@ -72,6 +75,7 @@ app.post('/login', async (request, response) => {
     }
     try {
         const bruger = await findBruger(brugernavn)
+        //console.log("LoginPost: " + users)
         if (users.includes(bruger)) {
             const password = request.body.password
             if (bruger.password === password) {
@@ -89,6 +93,13 @@ app.post('/login', async (request, response) => {
         response.sendStatus(401) //Unauthorized
     }
 
+})
+
+app.get('/opretUser', (request, response) => {
+    if(request.session.userlevel == '3')
+        response.render('opretUser')
+    else
+        response.sendStatus(401)
 })
 
 app.get('/logout', (request, response) => {
@@ -201,10 +212,34 @@ app.delete('/api/chats/:chatId/:beskedId', async (request, response) => {
                 return besked.id != beskedID
             }))
         }
+    }})
+
+
+
+app.post('/opretUser', async (request, response) => {
+    
+    try{
+        const allUsers = await fs.readdir('./users')
+
+        const newUser = {
+            id: allUsers.length,
+            brugernavn: request.body.brugernavn,
+            password: request.body.password,
+            oprettelsesdato: request.body.oprettelsesdato,
+            brugerniveau: request.body.brugerniveau
+        }
+
+        await fs.writeFile(`./users/${newUser.brugernavn}.json`,JSON.stringify(newUser))
+
+        users = await loadAllUsers()
+
+        console.log(users)
+
+        response.status(201).send({ok: true})
+
+    }catch(err){
+        response.sendStatus(err)
     }
-
-
-
 })
 
 app.listen(9090, () => {
