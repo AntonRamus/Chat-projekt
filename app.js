@@ -211,6 +211,7 @@ app.delete('/api/chats/:chatId/:beskedId', async (request, response) => {
             chat.beskeder = chat.beskeder.filter((besked => {
                 return besked.id != beskedID
             }))
+            await fs.writeFile(`./chats/${chatID}.json`,JSON.stringify(chat))
         }
     }})
 
