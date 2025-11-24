@@ -113,17 +113,69 @@ app.get('/logout', (request, response) => {
 }
 );
 
+async function getAllChats() {
+    const chatNames = await fs.readdir('./chats')
+    const chats = []
+    for (let chatName of chatNames) {
+        chats.push(JSON.parse(await fs.readFile('./chats/' + chatName)))
+    }
+    return chats
+}
+
 app.get('/chats', async (request, response) => {
     const userlevel = request.session.userlevel
-    if (userlevel === 3) {
-        const chatNames = await fs.readdir('./chats')
-        const chats = []
-        for (let chatName of chatNames) {
-            chats.push(JSON.parse(await fs.readFile('./chats/' + chatName)))
-        }
-        response.send(JSON.stringify(chats))
+
+    if (userlevel < 1 || userlevel > 3) {
+        response.sendStatus(401) //Unauthorized
     } else {
-        response.sendStatus(401)
+        const chats = await getAllChats()
+        response.send(JSON.stringify(chats))
+    }
+})
+
+app.get('/chats/:id', async (request, response) => {
+    const idToGet = request.params.id
+    const userlevel = request.session.userlevel
+    if (userlevel < 1 || userlevel > 3) {
+        response.sendStatus(401) //Unauthorized
+    } else {
+        const chats = await getAllChats()
+        let requestedChat = null
+        for (let chat of chats) {
+            if (chat.id == idToGet) {
+                requestedChat = chat
+                break
+            }
+        }
+        if (requestedChat == null) {
+            response.sendStatus(404)
+        } else {
+            const chatnavn = requestedChat.navn
+            response.render('chat', { title: chatnavn, bruger: request.session.username, userlevel: request.session.userlevel, chat: requestedChat })
+        }
+    }
+})
+
+app.get('/api/chats/:id', async (request, response) => {
+    const idToGet = request.params.id
+    const userlevel = request.session.userlevel
+    if (userlevel < 1 || userlevel > 3) {
+        response.sendStatus(401) //Unauthorized
+    } else {
+        const chats = await getAllChats()
+        let requestedChat = null
+        for (let chat of chats) {
+            if (chat.id == idToGet) {
+                requestedChat = chat
+                break
+            }
+        }
+        if (requestedChat == null) {
+            response.sendStatus(404)
+        } else {
+            const chatnavn = requestedChat.navn
+            response.send(JSON.stringify(requestedChat))
+        }
     }
 })
 

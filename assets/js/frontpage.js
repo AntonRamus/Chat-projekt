@@ -22,6 +22,7 @@ async function getChats() {
 }
 
 function visChats(chats) {
+    chatList.replaceChildren([]) //clear the list by replacing children with empty array
     for (let chat of chats) {
         const chatDOM = document.createElement("a")
         const li = document.createElement("li")
