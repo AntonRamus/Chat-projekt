@@ -1,0 +1,21 @@
+include includes/header
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title Users
+        link(rel="stylesheet", href="/css/seUser.css")
+    body
+        div.header-container
+            h1.header-title Bruger Liste
+            input.back-button(type="button", value="Tilbage", onclick="history.back()")
+        div.user-grid
+            each user in users
+                div.user
+                    p
+                        strong Brugernavn:
+                        span #{user.brugernavn}
+                    p
+                        strong Brugerlevel:
+                        span #{user.brugerniveau}
+                    input.details-button(type="Button", value="Detaljer", onclick=`location.href='/users/${user.brugernavn}'`)
+    

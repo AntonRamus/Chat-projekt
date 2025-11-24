@@ -10,8 +10,8 @@ html(lang="en")
     body
 h1 Velkommen til siden #{bruger}
 if (userlevel == 3)
-    input(type='button', class='button', value='Se brugere')
-    input(type="button", class='button', value='Opret bruger')
+    input(type='button', class='button', id='users', value='Se brugere')
+    input(type="button", class='button', id='opretUser', value='Opret bruger')
 
 input(type='button', class='button', id='seChats', value='Se chats')
 input(type='button', class='button', id='0', value='Log ud')
