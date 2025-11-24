@@ -17,7 +17,8 @@ p #{ejer} #{oprettelsesdato}
 div()
     ul(id='beskedList')
         each besked of chatBeskeder
-            div(id=besked.id)
+            div(id='li' + besked.id)
                 if (userlevel == 3 || besked.ejer == bruger)
                     button(id='ret' + besked.id) Ret besked
                     button(id='slet' + besked.id) Slet besked
+button(id='opretBesked') Opret besked
