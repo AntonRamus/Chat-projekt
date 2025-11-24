@@ -280,6 +280,63 @@ app.post('/opretUser', async (request, response) => {
     }
 })
 
+app.get("/users", async (request, response) => {
+  if (request.session.userlevel == "3") {
+    try {
+      const usersFolder = await fs.readdir("./users");
+      let allUsers = [];
+      for (let userFile of usersFolder) {
+        const data = await fs.readFile("./users/" + userFile, {
+          encoding: "utf8",
+        });
+        const user = JSON.parse(data);
+        allUsers.push(user);
+      }
+      response.render("seUser", { users: allUsers });
+    } catch (err) {
+      response.sendStatus(err);
+    }
+  } else {
+    response.sendStatus(401);
+  }
+});
+
+app.get("/users/:username", async (request, response) => {
+  if (request.session.userlevel == "3") {
+    const username = request.params.username;
+    try {
+      const data = await fs.readFile(`./users/${username}.json`, {
+        encoding: "utf8",
+      });
+      const user = JSON.parse(data);
+      response.render("userDetaljer", { user });
+    } catch (err) {
+      console.log(err);
+      response.sendStatus(404);
+    }
+  } else {
+    response.sendStatus(401);
+  }
+});
+
+app.get("/api/users/:username/chats", async (request, response) => {
+  if (request.session.userlevel == "3") {
+    const username = request.params.username;
+    try {
+      const allChats = await getAllChats();
+      const userChats = allChats.filter((chat) => {
+        return chat.beskeder.some((besked) => besked.ejer === username);
+      });
+      response.json(userChats);
+    } catch (err) {
+      console.log(err);
+      response.sendStatus(500);
+    }
+  } else {
+    response.sendStatus(401);
+  }
+});
+
 app.listen(9090, () => {
     console.log("Listening on port 9090");
 });
