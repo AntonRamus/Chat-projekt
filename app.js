@@ -1,6 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import fs from 'node:fs/promises'
+import {chat, message} from './chat.js'
 
 const app = express();
 const userAmount = 3;

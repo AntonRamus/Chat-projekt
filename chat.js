@@ -1,4 +1,4 @@
-class chat {
+export class chat {
     constructor(id, navn, ejer) {
         this.id = id
         this.navn = navn
@@ -11,7 +11,7 @@ class chat {
     }
 }
 
-class message {
+export class message {
     constructor(id, besked, ejer, chattilhørsforhold) {
         this.id = id
         this.besked = besked
