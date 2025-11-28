@@ -1,4 +1,6 @@
 const createUser = document.getElementById('opretUser')
+const tilbage = document.getElementById('tilbage')
+const logud = document.getElementById('logud')
 
 createUser.onclick = async () => {
         console.log("trying to create user")
@@ -21,4 +23,12 @@ createUser.onclick = async () => {
         }else
                 throw new error(response.status)
 
+}
+
+logud.onclick = async () => {
+        window.location.href ="/logout"
+}
+
+tilbage.onclick = async () => {
+        window.location.href = "/"
 }
