@@ -4,7 +4,6 @@ import fs from 'node:fs/promises'
 import { chat, message } from './chat.js'
 
 const app = express();
-const userAmount = 3;
 app.set("view engine", "pug");
 app.use(express.static("assets"));
 app.use(express.json());
@@ -49,7 +48,7 @@ app.get("/", async (request, response) => {
     if (request.session.ok) {
         //console.log(JSON.stringify(request.session))
 
-        if (request.session.userlevel == 1) {
+        if (request.session.userlevel == 1 || request.session.userlevel == 2) {
             const chats = await getAllChats();
             response.render('chats.pug', { title: 'chat siden', chats: chats, bruger: request.session.username, userlevel: request.session.userlevel })
         } else {
@@ -138,9 +137,25 @@ app.get("/chats", async (request, response) => {
         response.sendStatus(401); //Unauthorized
     } else {
         const chats = await getAllChats();
-        response.render('chats.pug', { title: 'chat siden', chats: chats, bruger: request.session.username, userlevel: request.session.userlevel })
+        response.render('chats', { title: 'Chat siden', chats: chats, bruger: request.session.username, userlevel: request.session.userlevel })
     }
 });
+
+app.get("/api/chats", async (request, response) => {
+    const chats = await getAllChats();
+    response.send(JSON.stringify(chats))
+
+});
+
+app.get("/opretChat", async (request, response) => {
+    const userlevel = request.session.userlevel;
+
+    if (userlevel == 2 || userlevel == 3) {
+        response.render('opretChat', {title: 'Opret chat', bruger: request.session.username})
+    } else {
+        response.sendStatus(401); //Unauthorized
+    }
+})
 
 app.get('/chats/:id', async (request, response) => {
     const idToGet = request.params.id
