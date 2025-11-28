@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import fs from 'node:fs/promises'
-import {chat, message} from './chat.js'
+import { chat, message } from './chat.js'
 
 const app = express();
 const userAmount = 3;
@@ -131,7 +131,7 @@ app.get("/chats", async (request, response) => {
         response.sendStatus(401); //Unauthorized
     } else {
         const chats = await getAllChats();
-        response.send(JSON.stringify(chats));
+        response.render('chats.pug', { title: 'chat siden', chats: chats, bruger: request.session.username, userlevel: request.session.userlevel })
     }
 });
 
@@ -282,60 +282,60 @@ app.post('/opretUser', async (request, response) => {
 })
 
 app.get("/users", async (request, response) => {
-  if (request.session.userlevel == "3") {
-    try {
-      const usersFolder = await fs.readdir("./users");
-      let allUsers = [];
-      for (let userFile of usersFolder) {
-        const data = await fs.readFile("./users/" + userFile, {
-          encoding: "utf8",
-        });
-        const user = JSON.parse(data);
-        allUsers.push(user);
-      }
-      response.render("seUser", { users: allUsers });
-    } catch (err) {
-      response.sendStatus(err);
+    if (request.session.userlevel == "3") {
+        try {
+            const usersFolder = await fs.readdir("./users");
+            let allUsers = [];
+            for (let userFile of usersFolder) {
+                const data = await fs.readFile("./users/" + userFile, {
+                    encoding: "utf8",
+                });
+                const user = JSON.parse(data);
+                allUsers.push(user);
+            }
+            response.render("seUser", { users: allUsers });
+        } catch (err) {
+            response.sendStatus(err);
+        }
+    } else {
+        response.sendStatus(401);
     }
-  } else {
-    response.sendStatus(401);
-  }
 });
 
 app.get("/users/:username", async (request, response) => {
-  if (request.session.userlevel == "3") {
-    const username = request.params.username;
-    try {
-      const data = await fs.readFile(`./users/${username}.json`, {
-        encoding: "utf8",
-      });
-      const user = JSON.parse(data);
-      response.render("userDetaljer", { user });
-    } catch (err) {
-      console.log(err);
-      response.sendStatus(404);
+    if (request.session.userlevel == "3") {
+        const username = request.params.username;
+        try {
+            const data = await fs.readFile(`./users/${username}.json`, {
+                encoding: "utf8",
+            });
+            const user = JSON.parse(data);
+            response.render("userDetaljer", { user });
+        } catch (err) {
+            console.log(err);
+            response.sendStatus(404);
+        }
+    } else {
+        response.sendStatus(401);
     }
-  } else {
-    response.sendStatus(401);
-  }
 });
 
 app.get("/api/users/:username/chats", async (request, response) => {
-  if (request.session.userlevel == "3") {
-    const username = request.params.username;
-    try {
-      const allChats = await getAllChats();
-      const userChats = allChats.filter((chat) => {
-        return chat.beskeder.some((besked) => besked.ejer === username);
-      });
-      response.json(userChats);
-    } catch (err) {
-      console.log(err);
-      response.sendStatus(500);
+    if (request.session.userlevel == "3") {
+        const username = request.params.username;
+        try {
+            const allChats = await getAllChats();
+            const userChats = allChats.filter((chat) => {
+                return chat.beskeder.some((besked) => besked.ejer === username);
+            });
+            response.json(userChats);
+        } catch (err) {
+            console.log(err);
+            response.sendStatus(500);
+        }
+    } else {
+        response.sendStatus(401);
     }
-  } else {
-    response.sendStatus(401);
-  }
 });
 
 app.listen(9090, () => {

@@ -10,7 +10,7 @@ logout.onclick = async () => {
 };
 
 seChats.onclick = async () => {
-  let chats = await getChats().then((chats) => visChats(chats));
+  window.location.href = '/chats'
 };
 
 opretUser.onclick = async () => {
