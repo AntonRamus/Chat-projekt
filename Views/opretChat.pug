@@ -5,8 +5,9 @@ html(lang="en")
         meta(charset="UTF-8")
         title= title
         link(rel="stylesheet", href="/css/frontpage.css")
-        script(src="/js/chats.js" defer)
+        script(src="/js/opretChat.js" defer)
     body
-        input(type='text' name='navn',, id='' placeholder='navn på chat' required)
-
-        input(type='button' name='opretUser',, id='opretUser' value='Opret User')
+        h1 Opret chat
+        input(type='text' name='navn', id='chatnavn' placeholder='navn på chat' required)
+        input(type='text' name='besked', id='chatbesked' required)
+        input(type='button' name='opretUser',, id='opretChat' value='Opret chat')

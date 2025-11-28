@@ -1,7 +1,18 @@
-import express from 'express'
+import express, { response } from 'express'
 import session from 'express-session'
 import fs from 'node:fs/promises'
 import { chat, message } from './chat.js'
+
+let nextChatID
+
+async function initChatID() {
+    const chats = await getAllChats()
+    nextChatID = parseInt(chats[chats.length - 1].id)
+    nextChatID++;
+    console.log(`nextChatID: ${nextChatID}`)
+}
+
+initChatID();
 
 const app = express();
 app.set("view engine", "pug");
@@ -130,6 +141,10 @@ async function getAllChats() {
     return chats;
 }
 
+async function getNextChatID() {
+    return nextChatID++
+}
+
 app.get("/chats", async (request, response) => {
     const userlevel = request.session.userlevel;
 
@@ -151,9 +166,35 @@ app.get("/opretChat", async (request, response) => {
     const userlevel = request.session.userlevel;
 
     if (userlevel == 2 || userlevel == 3) {
-        response.render('opretChat', {title: 'Opret chat', bruger: request.session.username})
+        response.render('opretChat', { title: 'Opret chat', bruger: request.session.username })
     } else {
         response.sendStatus(401); //Unauthorized
+    }
+})
+
+app.post("/opretChat", async (request, response) => {
+    const userlevel = request.session.userlevel
+    if (userlevel == 2 || userlevel == 3) {
+        const id = await getNextChatID()
+        const chatnavn = request.body.navn
+        const ejer = request.session.username
+        const chatbesked = request.body.besked
+
+        const nyChat = new chat(id, chatnavn, ejer)
+        nyChat.addMessage(new message(0, chatbesked, ejer, 'ejer'))
+        console.log("ny chat:" + JSON.stringify(nyChat))
+
+        try {
+            await fs.writeFile(`./chats/${nyChat.id}.json`, JSON.stringify(nyChat))
+            response.status(201).send({ ok: true });
+        } catch (error) {
+            console.log(error)
+            response.status(500).send({ ok: false })
+        }
+
+
+    } else {
+        response.sendStatus(401)
     }
 })
 
@@ -292,7 +333,7 @@ app.post('/opretUser', async (request, response) => {
 
         await fs.writeFile(`./users/${newUser.brugernavn}.json`, JSON.stringify(newUser))
 
-        users = await loadAllUsers()
+        users.post(newUser)
 
         console.log(users)
 
