@@ -48,11 +48,18 @@ let users = await loadAllUsers();
 app.get("/", async (request, response) => {
     if (request.session.ok) {
         //console.log(JSON.stringify(request.session))
-        response.render("frontpage", {
-            title: "Chatten",
-            bruger: request.session.username,
-            userlevel: request.session.userlevel,
-        });
+
+        if (request.session.userlevel == 1) {
+            const chats = await getAllChats();
+            response.render('chats.pug', { title: 'chat siden', chats: chats, bruger: request.session.username, userlevel: request.session.userlevel })
+        } else {
+            response.render("frontpage", {
+                title: "Chatten",
+                bruger: request.session.username,
+                userlevel: request.session.userlevel,
+            })
+        }
+
     } else {
         response.render("login");
     }

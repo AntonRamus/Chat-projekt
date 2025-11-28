@@ -9,12 +9,19 @@ html(lang="en")
         link(rel="stylesheet", href="/css/frontpage.css")
         script(src="/js/chats.js" defer)
     body
-h1 chatsiden
-ul
-    each chat in chats 
-        li(id='chat' + chat.id)
-            a(href='/chats/' + chat.id) #{chat.navn} #{chat.oprettelsesdato}
-            if (userlevel == 3 || chat.ejer == bruger)
+div.headerContainer
+    if (userlevel != undefined)
+        input.logout-button(type="button", value="log ud", onclick="logout()")
+    else
+        input.logout-button(type="button", value="log ind", onclick="login()")
+    h1.header-title Chatsiden
+    input.back-button(type="button", value="Tilbage", onclick="history.back()")
+div.chatContainer
+    ul
+        each chat in chats 
+            li(id='chat' + chat.id)
+                a(href='/chats/' + chat.id) #{chat.navn} #{chat.oprettelsesdato}
+                if (userlevel == 3 || chat.ejer == bruger)
                     button(id='ret' + chat.id) Ret chat
                     button(id='slet' + chat.id) Slet chat
-button(id='opretChat') Opret chat
+    button(id='opretChat') Opret chat
