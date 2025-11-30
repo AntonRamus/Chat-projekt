@@ -1,0 +1,47 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  align-items: center;
+  font-family: comic sans ms, cursive, sans-serif;
+}
+.headerContainer {
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+}
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  border: black 2px solid;
+  border-radius: 10px;
+  margin: 0 auto;
+  justify-content: center;
+  max-width: 600px;
+  width: 90%;
+}
+
+button {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+input[type="button"] {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="button"]:hover {
+  background-color: #ddd;
+}

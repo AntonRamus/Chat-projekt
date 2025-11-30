@@ -1,0 +1,23 @@
+body {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-family: comic sans ms, cursive, sans-serif;
+}
+div {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+button {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
