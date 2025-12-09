@@ -31,9 +31,13 @@ async function sletChat(chatID) {
     window.location.href = `/chats`
 }
 
+async function retChat(chatID) {
+    window.location.href = `/chats/ret/${chatID}`
+}
+
 async function getChats() {
-    const response = await fetch('/api/chats/')
-    return response.json()
+    const response = await fetch('/api/chats/');
+    return response.json();
 }
 
 async function initChats() {

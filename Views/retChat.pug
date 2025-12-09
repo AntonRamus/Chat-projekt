@@ -1,0 +1,13 @@
+doctype html
+- var bruger = bruger
+- var chat = chat
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/frontpage.css")
+        script(src="/js/retChat.js" defer)
+    body
+        h1 #{chat.navn}
+        input(type='text' name='navn', id='chatnavn' value=chat.navn required)
+        input(type='button' name='opretUser', id='retChat' value='Ret chat', onclick="retChat(" + chat.id + ")")
