@@ -216,4 +216,25 @@ router.delete("/api/chats/:chatId/:beskedId", async (request, response) => {
   }
 });
 
+router.delete("/api/chats/:chatId", async (request, response) => {
+  const chatID = request.params.chatId;
+
+  console.log(
+    "modtog delete request på chat: " + chatID
+  );
+
+  const data = await fs.readFile("./chats/" + chatID + ".json");
+
+  if (data == "undefined") {
+    console.log("chat ikke fundet");
+    response.sendStatus(404);
+  } else {
+    await fs.unlink("./chats/" + chatID + ".json");
+    console.log("file deleted succesfully");
+    response.ok == true;
+    response.sendStatus(201);
+  }
+
+})
+
 export default router;
