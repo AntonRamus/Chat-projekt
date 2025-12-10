@@ -17,7 +17,7 @@ html(lang="en")
                     li Ingen beskeder fundet for denne bruger
                 else
                     each besked of chatBeskeder
-                        li(id='id' + besked.id style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;")
+                        div(id='id' + besked.id style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;")
                             p
                                 strong Besked:
                                 | #{besked.besked}

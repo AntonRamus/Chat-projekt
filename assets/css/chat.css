@@ -32,3 +32,10 @@ button {
 button:hover {
   background-color: #ddd;
 }
+
+div [id = "li"] {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
