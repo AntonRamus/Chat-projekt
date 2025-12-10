@@ -87,6 +87,50 @@ router.post("/opretChat", async (request, response) => {
   }
 });
 
+router.get("/chats/:chatId/messages/:messageId", async (request, response) => {
+  const chatId = request.params.chatId;
+  const messageId = request.params.messageId;
+  const userlevel = request.session.userlevel;
+
+  if (userlevel == "undefined") {
+    response.redirect("/login");
+  }
+  if (userlevel < 1 || userlevel > 3) {
+    response.sendStatus(401); //Unauthorized
+  } else {
+    try {
+      const data = await fs.readFile(`./chats/${chatId}.json`, {
+        encoding: "utf8",
+      });
+      const chat = JSON.parse(data);
+
+      // Find the specific message
+      let requestedMessage = null;
+      for (let besked of chat.beskeder) {
+        if (besked.id == messageId) {
+          requestedMessage = besked;
+          break;
+        }
+      }
+
+      if (requestedMessage == null) {
+        response.sendStatus(404);
+      } else {
+        response.render("messageDetaljer", {
+          title: "Besked Detaljer",
+          bruger: request.session.username,
+          userlevel: request.session.userlevel,
+          message: requestedMessage,
+          chat: chat,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      response.sendStatus(404);
+    }
+  }
+});
+
 router.get("/chats/:id", async (request, response) => {
   const idToGet = request.params.id;
   const userlevel = request.session.userlevel;

@@ -67,3 +67,29 @@ input[id="logud"]:hover {
     right: 1.75cm;
     top: 1.5cm;
 }
+
+button {
+    font-family: comic sans ms, sans-serif;
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+button[id="tilbage"] {
+    font-size: 10px;
+}
+
+button[id="logud"]{
+    position: fixed;
+    right: 1.75cm;
+    top: 1.5cm;
+}

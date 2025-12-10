@@ -6,12 +6,12 @@ html(lang="en")
         script(src="/js/opretUser.js" defer)
         link(rel="stylesheet", href="/css/opretUser.css")
     body
-        input(type='button' name='logud',,id='logud' value='Log Ud')
+        button(name='logud', id='logud') Log Ud
         div(id='wholeBody')
             h1="Opret Bruger"
             p="Her kan du oprette nye bruger til systemmet."
             input(type='text' name='brugernavn',, id='brugernavn' placeholder='brugernavn' required)
             input(type='text' name='password',, id='password' placeholder='password' required)
             input(type='text' name='brugerniveau',, id='brugerniveau' placeholder='brugerniveau' required)
-            input(type='button' name='opretUser',, id='opretUser' value='Opret User')
-            input(type='button' name='tilbage',, id='tilbage' value='Tilbage')
+            button(name='opretUser', id='opretUser') Opret User
+            button(name='tilbage', id='tilbage') Tilbage

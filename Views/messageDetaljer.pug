@@ -1,0 +1,50 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/chat.css")
+    body
+        h1 Besked Detaljer
+
+        div(style="margin: 20px 0; padding: 20px; border: 2px solid #333; background-color: #f9f9f9;")
+            h2 Besked Indhold
+            p(style="font-size: 18px; margin: 10px 0;")
+                strong Besked:
+                |  #{message.besked}
+
+            hr
+
+            h3 Metadata
+            p
+                strong Besked ID:
+                |  #{message.id}
+            p
+                strong Forfatter:
+                |  #{message.ejer}
+            p
+                strong Oprettelsesdato:
+                |  #{message.oprettelsesdato}
+            p
+                strong Chat tilhørsforhold:
+                |  #{message.chattilhørsforhold || 'N/A'}
+
+            hr
+
+            h3 Chat Information
+            p
+                strong Chat Navn:
+                |  #{chat.navn}
+            p
+                strong Chat ID:
+                |  #{chat.id}
+            p
+                strong Chat Ejer:
+                |  #{chat.ejer}
+            p
+                strong Chat Oprettet:
+                |  #{chat.oprettelsesdato}
+
+        div(style="margin-top: 20px;")
+            button(onclick=`window.location.href='/chats/${chat.id}'`) Tilbage til Chat
+            button(onclick="window.location.href='/chats'") Tilbage til Chats

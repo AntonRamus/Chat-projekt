@@ -11,9 +11,9 @@ div.user
     p Brugerlevel: #{user.brugerniveau}
     p ID: #{user.id}
     p Oprettelsesdato: #{user.oprettelsesdato}
-    input(type="button", value="Tilbage", onclick="history.back()")
-    input(type="button", value="Se chats", id="seChatsBtn")
-    input(type="button", value="Se Alle skrevet beskeder",id="beskeder")
+    button(onclick="history.back()") Tilbage
+    button(id="seChatsBtn") Se chats
+    button(id="beskeder") Se Alle skrevet beskeder
     div#chatListContainer(style="margin-top: 20px;")
         ul#chatList
 script.

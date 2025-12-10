@@ -19,6 +19,12 @@ div()
     ul(id='beskedList')
         each besked of chatBeskeder
             div(id='li' + besked.id)
+                p(style='margin: 0 0 5px 0;')
+                    strong #{besked.ejer}:
+                    |  #{besked.besked}
+                    br
+                    small #{besked.oprettelsesdato}
+                button(onclick=`window.location.href='/chats/${chat.id}/messages/${besked.id}'`) Se detaljer
                 if (userlevel == 3 || besked.ejer == bruger)
                     button(id='ret' + besked.id) Ret besked
                     button(id='slet' + besked.id) Slet besked

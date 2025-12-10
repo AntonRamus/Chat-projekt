@@ -24,10 +24,25 @@ input {
     border-radius: 5px;
     font-size: 16px;
     font-family: comic sans ms, sans-serif;
-    
+
 }
 input:hover {
     background-color: #000000;
     color: #ffffff;
     cursor: pointer;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: comic sans ms, sans-serif;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #000000;
+    color: #ffffff;
 }

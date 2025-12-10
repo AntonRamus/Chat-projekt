@@ -11,12 +11,12 @@ html(lang="en")
     body
 div.headerContainer
     if (userlevel != undefined)
-        input.logout-button(type="button", value="log ud", onclick="logout()")
+        button.logout-button(onclick="logout()") log ud
     else
-        input.logout-button(type="button", value="log ind", onclick="login()")
+        button.logout-button(onclick="login()") log ind
     h1.header-title Chatsiden
     if (userlevel == 3)
-        input.back-button(type="button", value="Tilbage", id="backButton")
+        button.back-button(id="backButton") Tilbage
 div.chatContainer
     ul
         each chat in chats 

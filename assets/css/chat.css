@@ -22,14 +22,13 @@ input[id="nyBesked"] {
 button {
   margin: 10px;
   padding: 10px;
+  border: 2px solid #000000;
   border-radius: 5px;
-  cursor: pointer;
+  font-size: 16px;
   font-family: comic sans ms, cursive, sans-serif;
-
+  cursor: pointer;
 }
-/*#*/
+
 button:hover {
   background-color: #ddd;
-  font-family: comic sans ms, cursive, sans-serif;
-
 }

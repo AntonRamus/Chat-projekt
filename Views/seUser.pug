@@ -7,7 +7,7 @@ html(lang="en")
     body
         div.header-container
             h1.header-title Bruger Liste
-            input.back-button(type="button", value="Tilbage", onclick="history.back()")
+            button.back-button(onclick="history.back()") Tilbage
         div.user-grid
             each user in users
                 div.user
@@ -17,5 +17,5 @@ html(lang="en")
                     p
                         strong Brugerlevel:
                         span #{user.brugerniveau}
-                    input.details-button(type="Button", value="Detaljer", onclick=`location.href='/users/${user.brugernavn}'`)
+                    button.details-button(onclick=`location.href='/users/${user.brugernavn}'`) Detaljer
     

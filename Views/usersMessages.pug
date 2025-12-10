@@ -8,7 +8,7 @@ html(lang="en")
     body
         h1 Beskeder fra #{user.brugernavn}
         p Bruger ID: #{user.id} | Oprettet: #{user.oprettelsesdato}
-        input(type="button", value="Tilbage", onclick="history.back()")
+        button(onclick="history.back()") Tilbage
 
         div(style="margin-top: 20px;")
             h2 Alle beskeder (#{chatBeskeder.length})

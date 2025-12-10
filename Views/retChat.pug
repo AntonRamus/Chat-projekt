@@ -10,4 +10,4 @@ html(lang="en")
     body
         h1 #{chat.navn}
         input(type='text' name='navn', id='chatnavn' value=chat.navn required)
-        input(type='button' name='opretUser', id='retChat' value='Ret chat', onclick="retChat(" + chat.id + ")")
+        button(name='opretUser', id='retChat', onclick="retChat(" + chat.id + ")") Ret chat
