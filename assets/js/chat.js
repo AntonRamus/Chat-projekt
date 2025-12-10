@@ -83,7 +83,7 @@ const opretBesked = document.getElementById('opretBesked')
 
 opretBesked.onclick = async () => {
     let apiCall = `/api/chats/${id}/*`
-    let message = prompt('Opret besked')
+    let message = document.getElementById('nyBesked').value
 
     if (message == null || message == "") {
         //something here maybe?
