@@ -20,24 +20,39 @@ router.get("/opretUser", (request, response) => {
 
 router.post("/opretUser", async (request, response) => {
   try {
-    const allUsers = await fs.readdir("./users");
+    // Load all existing users to find the highest ID
+    const usersFolder = await fs.readdir("./users");
+    let maxId = -1;
+    for (let userFile of usersFolder) {
+      const data = await fs.readFile("./users/" + userFile, {
+        encoding: "utf8",
+      });
+      const user = JSON.parse(data);
+      if (user.id > maxId) {
+        maxId = user.id;
+      }
+    }
 
     const newUser = {
-      id: allUsers.length,
+      id: maxId + 1, // Use next available ID
       brugernavn: request.body.brugernavn,
       password: request.body.password,
       oprettelsesdato: request.body.oprettelsesdato,
-      brugerniveau: request.body.brugerniveau,
+      brugerniveau: parseInt(request.body.brugerniveau),
     };
+
+    console.log("Creating new user:", newUser);
 
     await fs.writeFile(
       `./users/${newUser.brugernavn}.json`,
       JSON.stringify(newUser)
     );
 
+    console.log(`User ${newUser.brugernavn} created successfully with ID ${newUser.id}`);
     response.status(201).send({ ok: true });
   } catch (err) {
-    response.sendStatus(err);
+    console.error("Error creating user:", err);
+    response.sendStatus(500);
   }
 });
 

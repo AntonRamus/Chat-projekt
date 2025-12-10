@@ -19,9 +19,9 @@ div.headerContainer
         button.back-button(id="backButton") Tilbage
 div.chatContainer
     div
-        each chat in chats 
+        each chat in chats
             div(id="chats")
-                a(id='chat' + chat.id, href='/chats/' + chat.id)
+                a(id='chat' + chat.id, href='/chats/' + chat.id) #{chat.navn}
                 if (userlevel == 3 || chat.ejer == bruger)
                     button(id='ret' + chat.id, onclick="retChat(" + chat.id + ")") Ret chat
                     button(id='slet' + chat.id, onclick="sletChat(" + chat.id + ")") Slet chat

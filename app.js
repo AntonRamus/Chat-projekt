@@ -39,7 +39,7 @@ async function loadAllUsers() {
         encoding: "utf8",
       });
       const user = JSON.parse(data);
-      users[user.id] = user;
+      users.push(user); // Use push instead of indexing by ID to avoid sparse array
     }
     return users;
   } catch (error) {
@@ -47,13 +47,31 @@ async function loadAllUsers() {
   }
 }
 
+async function getAllChats() {
+  try {
+    const chatNames = await fs.readdir("./chats");
+    const chats = [];
+    for (let chatName of chatNames) {
+      const data = await fs.readFile("./chats/" + chatName, {
+        encoding: "utf8",
+      });
+      chats.push(JSON.parse(data));
+    }
+    return chats;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 let users = await loadAllUsers();
 
 app.get("/", async (request, response) => {
   if (request.session.ok) {
-    //console.log(JSON.stringify(request.session))
+    console.log(`Landing page - User: ${request.session.username}, Level: ${request.session.userlevel} (type: ${typeof request.session.userlevel})`);
 
     if (request.session.userlevel == 1 || request.session.userlevel == 2) {
+      console.log("Rendering chats page");
       const chats = await getAllChats();
       response.render("chats.pug", {
         title: "chat siden",
@@ -62,6 +80,7 @@ app.get("/", async (request, response) => {
         userlevel: request.session.userlevel,
       });
     } else {
+      console.log("Rendering frontpage");
       response.render("frontpage", {
         title: "Chatten",
         bruger: request.session.username,
@@ -93,22 +112,34 @@ app.post("/login", async (request, response) => {
     response.render("login");
   }
   try {
+    // Reload users to get any newly created users
+    users = await loadAllUsers();
+    console.log(`Login attempt for: ${brugernavn}`);
+    console.log(`Loaded ${users.length} users`);
+
     const bruger = await findBruger(brugernavn);
-    //console.log("LoginPost: " + users)
-    if (users.includes(bruger)) {
+    console.log(`Found user:`, bruger);
+
+    // Check if user was found (bruger is an object, not the error string)
+    if (bruger && typeof bruger === "object" && bruger.brugernavn) {
       const password = request.body.password;
+      console.log(`User found, checking password...`);
       if (bruger.password === password) {
+        console.log(`Password correct, logging in with level ${bruger.brugerniveau}`);
         request.session.ok = true;
         request.session.username = brugernavn;
         request.session.userlevel = bruger.brugerniveau;
         response.status(201).send({ ok: true });
       } else {
+        console.log(`Password incorrect`);
         response.sendStatus(401);
       }
     } else {
+      console.log(`User not found`);
       response.sendStatus(401);
     }
   } catch (error) {
+    console.error("Login error:", error);
     response.sendStatus(401); //Unauthorized
   }
 });
