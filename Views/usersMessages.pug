@@ -1,16 +1,27 @@
 doctype html
-- var user = user
 html(lang="en")
     head
         meta(charset="UTF-8")
-        title= title
+        title Beskeder for #{user.brugernavn}
         link(rel="stylesheet", href="/css/chat.css")
         script(src="/js/chat.js" defer)
     body
-h1 #{user.brugernavn}
-p #{user.id} #{user.oprettelsesdato}
+        h1 Beskeder fra #{user.brugernavn}
+        p Bruger ID: #{user.id} | Oprettet: #{user.oprettelsesdato}
+        input(type="button", value="Tilbage", onclick="history.back()")
 
-div()
-    ul(id='beskedList')
-        each besked of chatBeskeder
-            div(id='id' + besked.id)
+        div(style="margin-top: 20px;")
+            h2 Alle beskeder (#{chatBeskeder.length})
+            ul(id='beskedList')
+                if chatBeskeder.length === 0
+                    li Ingen beskeder fundet for denne bruger
+                else
+                    each besked of chatBeskeder
+                        li(id='id' + besked.id style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc;")
+                            p
+                                strong Besked:
+                                | #{besked.besked}
+                            p
+                                em Dato: #{besked.oprettelsesdato}
+                            p
+                                small Fra chat: "#{besked.chatNavn}" (ID: #{besked.chatId})

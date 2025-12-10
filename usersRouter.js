@@ -80,19 +80,51 @@ router.get("/users/:username", async (request, response) => {
   }
 });
 
-router.get("/users/:id/messages", async (request,respons) => {
+router.get("/users/:id/messages", async (request, response) => {
 
   if(request.session.userlevel == "3"){
-    const brugernavn = request.body.brugernavn;
+    const userId = request.params.id;
     try{
-    const data = await fs.readFile(`./users/${brugernavn}.json`, {
-        encoding: "utf8",
-      });
-      const user = JSON.parse(data);
-      response.render("usersMessages", { user });
+      // Find user by ID from all user files
+      const usersFolder = await fs.readdir("./users");
+      let user = null;
+      for (let userFile of usersFolder) {
+        const data = await fs.readFile("./users/" + userFile, {
+          encoding: "utf8",
+        });
+        const userData = JSON.parse(data);
+        if (userData.id == userId) {
+          user = userData;
+          break;
+        }
+      }
+
+      if (!user) {
+        response.sendStatus(404);
+        return;
+      }
+
+      // Get all chats and collect messages from this user
+      const allChats = await getAllChats();
+      const chatBeskeder = [];
+      for (let chat of allChats) {
+        for (let besked of chat.beskeder) {
+          if (besked.ejer === user.brugernavn) {
+            // Add chat info to the message
+            const beskedWithChat = {
+              ...besked,
+              chatNavn: chat.navn,
+              chatId: chat.id
+            };
+            chatBeskeder.push(beskedWithChat);
+          }
+        }
+      }
+
+      response.render("usersMessages", { user, chatBeskeder });
     }catch(err){
       console.log(err);
-      responst.sendStatus(404);
+      response.sendStatus(404);
     }
   } else{
     response.sendStatus(401)

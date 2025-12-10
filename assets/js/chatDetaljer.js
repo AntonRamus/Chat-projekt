@@ -8,17 +8,7 @@ seChatsBtn.onclick = async () => {
 };
 
 seAlleBeskeder.onclick = async () => {
-  try {
-    const response = await fetch(`/users/${id}/messages`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({brugernavn})
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Fejl ved hentning af chats:", error);
-    return [];
-  }
+  window.location.href = `/users/${id}/messages`;
 };
 
 async function getChatsForBruger(brugernavn) {
