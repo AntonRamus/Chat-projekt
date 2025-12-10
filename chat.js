@@ -10,7 +10,7 @@ export class chat {
         this.beskeder.push(message)
     }
 }
-
+//noget
 export class message {
     constructor(id, besked, ejer, chattilhørsforhold) {
         this.id = id
