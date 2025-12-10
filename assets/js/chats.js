@@ -51,4 +51,9 @@ async function initChats() {
     }
 }
 
+const backButton = document.getElementById('backButton')
+backButton.onclick = async () => {
+    window.location.href = `/`
+}
+
 initChats()

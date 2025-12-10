@@ -99,3 +99,9 @@ opretBesked.onclick = async () => {
     }
 
 }
+
+const tilbageTilChats = document.getElementById('tilbageTilChats')
+
+tilbageTilChats.onclick = async () => {
+    window.location.href = `/chats/`
+}

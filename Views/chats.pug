@@ -16,7 +16,7 @@ div.headerContainer
         input.logout-button(type="button", value="log ind", onclick="login()")
     h1.header-title Chatsiden
     if (userlevel == 3)
-        input.back-button(type="button", value="Tilbage", onclick="history.back()")
+        input.back-button(type="button", value="Tilbage", id="backButton")
 div.chatContainer
     ul
         each chat in chats 
