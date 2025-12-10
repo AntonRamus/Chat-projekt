@@ -13,8 +13,10 @@ div.user
     p Oprettelsesdato: #{user.oprettelsesdato}
     input(type="button", value="Tilbage", onclick="history.back()")
     input(type="button", value="Se chats", id="seChatsBtn")
+    input(type="button", value="Se Alle skrevet beskeder",id="beskeder")
     div#chatListContainer(style="margin-top: 20px;")
         ul#chatList
-script(src="/js/chatDetaljer.js")
 script.
     const brugernavn = '#{user.brugernavn}';
+    const id = '#{user.id}';
+script(src="/js/chatDetaljer.js")

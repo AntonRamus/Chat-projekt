@@ -1,0 +1,16 @@
+doctype html
+- var user = user
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/chat.css")
+        script(src="/js/chat.js" defer)
+    body
+h1 #{user.brugernavn}
+p #{user.id} #{user.oprettelsesdato}
+
+div()
+    ul(id='beskedList')
+        each besked of chatBeskeder
+            div(id='id' + besked.id)

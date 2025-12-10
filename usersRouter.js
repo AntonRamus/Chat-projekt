@@ -80,6 +80,26 @@ router.get("/users/:username", async (request, response) => {
   }
 });
 
+router.get("/users/:id/messages", async (request,respons) => {
+
+  if(request.session.userlevel == "3"){
+    const brugernavn = request.body.brugernavn;
+    try{
+    const data = await fs.readFile(`./users/${brugernavn}.json`, {
+        encoding: "utf8",
+      });
+      const user = JSON.parse(data);
+      response.render("usersMessages", { user });
+    }catch(err){
+      console.log(err);
+      responst.sendStatus(404);
+    }
+  } else{
+    response.sendStatus(401)
+  }
+
+});
+
 router.get("/api/users/:username/chats", async (request, response) => {
   if (request.session.userlevel == "3") {
     const username = request.params.username;

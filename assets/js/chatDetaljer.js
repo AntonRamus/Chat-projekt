@@ -1,9 +1,24 @@
 const seChatsBtn = document.getElementById("seChatsBtn");
 const chatList = document.getElementById("chatList");
+const seAlleBeskeder = document.getElementById("beskeder");
 
 seChatsBtn.onclick = async () => {
   const chats = await getChatsForBruger(brugernavn);
   visChats(chats);
+};
+
+seAlleBeskeder.onclick = async () => {
+  try {
+    const response = await fetch(`/users/${id}/messages`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({brugernavn})
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Fejl ved hentning af chats:", error);
+    return [];
+  }
 };
 
 async function getChatsForBruger(brugernavn) {
