@@ -23,7 +23,7 @@ div.chatContainer
             li()
                 a(id='chat' + chat.id, href='/chats/' + chat.id)
                 if (userlevel == 3 || chat.ejer == bruger)
-                    button(id='ret' + chat.id) Ret chat
-                    button(id='slet' + chat.id) Slet chat
+                    button(id='ret' + chat.id, onclick="retChat(" + chat.id + ")") Ret chat
+                    button(id='slet' + chat.id, onclick="sletChat(" + chat.id + ")") Slet chat
     if (userlevel == 2 || userlevel == 3)
         button(id='opretChat', onclick="opretChat()") Opret chat

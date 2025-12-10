@@ -9,9 +9,35 @@ function login() {
 function opretChat() {
     window.location.href = '/opretChat'
 }
+
+async function sletChat(chatID) {
+    let apiCall = `/api/chats/${chatID}`;
+    console.log("api call = " + apiCall)
+    const response = await fetch(apiCall, {
+        method: 'DELETE'
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json()
+    })
+        .then(data => {
+            console.log('Delete successful:', data)
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error)
+        })
+    console.log(response)
+    window.location.href = `/chats`
+}
+
+async function retChat(chatID) {
+    window.location.href = `/chats/ret/${chatID}`
+}
+
 async function getChats() {
-    const response = await fetch('/api/chats/')
-    return response.json()
+    const response = await fetch('/api/chats/');
+    return response.json();
 }
 
 async function initChats() {

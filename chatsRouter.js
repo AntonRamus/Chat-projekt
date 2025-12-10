@@ -141,6 +141,34 @@ router.get("/api/chats/:id", async (request, response) => {
   }
 });
 
+router.post("/chats/ret/:chatId", async (request, response) => {
+  const chatID = request.params.chatId;
+  const userlevel = request.session.userlevel;
+  if (userlevel == "undefined") {
+    response.redirect("/login");
+  }
+  if (userlevel < 1 || userlevel > 3) {
+    response.sendStatus(401); //Unauthorized
+  } else {
+    const chats = await getAllChats();
+    let requestedChat = null;
+    for (let chat of chats) {
+      if (chat.id == chatID) {
+        requestedChat = chat;
+        break;
+      }
+    }
+    if (requestedChat == null) {
+      response.sendStatus(404);
+    } else {
+      const chatnavn = request.body.navn
+      requestedChat.navn = chatnavn
+      await fs.writeFile(`./chats/${chatID}.json`, JSON.stringify(requestedChat));
+      response.status(201).send({ ok: true });
+    }
+  }
+})
+
 router.post("/api/chats/:chatId/:beskedId", async (request, response) => {
   const chatID = request.params.chatId;
   const beskedID = request.params.beskedId;
@@ -215,5 +243,55 @@ router.delete("/api/chats/:chatId/:beskedId", async (request, response) => {
     }
   }
 });
+
+router.delete("/api/chats/:chatId", async (request, response) => {
+  const chatID = request.params.chatId;
+
+  console.log(
+    "modtog delete request på chat: " + chatID
+  );
+
+  const data = await fs.readFile("./chats/" + chatID + ".json");
+
+  if (data == "undefined") {
+    console.log("chat ikke fundet");
+    response.sendStatus(404);
+  } else {
+    await fs.unlink("./chats/" + chatID + ".json");
+    console.log("file deleted succesfully");
+    response.ok == true;
+    response.sendStatus(201);
+  }
+})
+
+router.get("/chats/ret/:chatId", async (request, response) => {
+  const chatID = request.params.chatId;
+  const userlevel = request.session.userlevel;
+  if (userlevel == "undefined") {
+    response.redirect("/login");
+  }
+  if (userlevel < 1 || userlevel > 3) {
+    response.sendStatus(401); //Unauthorized
+  } else {
+    const chats = await getAllChats();
+    let requestedChat = null;
+    for (let chat of chats) {
+      if (chat.id == chatID) {
+        requestedChat = chat;
+        break;
+      }
+    }
+    if (requestedChat == null) {
+      response.sendStatus(404);
+    } else {
+      const chatnavn = requestedChat.navn;
+      response.render("retChat", {
+        title: chatnavn,
+        bruger: request.session.username,
+        chat: requestedChat,
+      });
+    }
+  }
+})
 
 export default router;
