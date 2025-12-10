@@ -18,9 +18,9 @@ div.headerContainer
     if (userlevel == 3)
         button.back-button(id="backButton") Tilbage
 div.chatContainer
-    ul
+    div
         each chat in chats 
-            li()
+            div(id="chats")
                 a(id='chat' + chat.id, href='/chats/' + chat.id)
                 if (userlevel == 3 || chat.ejer == bruger)
                     button(id='ret' + chat.id, onclick="retChat(" + chat.id + ")") Ret chat

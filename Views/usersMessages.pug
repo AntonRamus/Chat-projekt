@@ -12,7 +12,7 @@ html(lang="en")
 
         div(style="margin-top: 20px;")
             h2 Alle beskeder (#{chatBeskeder.length})
-            ul(id='beskedList')
+            div(id='beskedList')
                 if chatBeskeder.length === 0
                     li Ingen beskeder fundet for denne bruger
                 else

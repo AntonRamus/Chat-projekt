@@ -37,3 +37,13 @@ button {
 button:hover {
   background-color: #ddd;
 }
+
+div[id="chats"]{
+  font-family: comic sans ms, sans-serif;
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+}
